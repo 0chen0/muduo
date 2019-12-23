@@ -1,0 +1,17 @@
+{
+	"name": "muduo-docker-env",
+
+	"dockerFile": "Dockerfile",
+
+	"runArgs": [
+			"--name", "muduo-image"
+			, "-p", "22222:22"
+			, "-v", "/Share_Root:/share"
+			, "-v", "docker-share:/docker-share"			
+	],
+
+	"extensions": [
+		"ms-vscode.cpptools"
+		, "ms-vscode.cmake-tools"
+	]
+}

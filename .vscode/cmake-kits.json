@@ -1,0 +1,9 @@
+[
+    {
+        "name" : "GCC 4.8.5",
+        "compilers": {
+            "CXX" : "/usr/bin/g++",
+            "CC" : "/usr/bin/gcc"
+        }
+    }
+]

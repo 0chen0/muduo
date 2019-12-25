@@ -1,0 +1,5 @@
+{
+	"cmake.buildDirectory": "/root/build"
+    , "cmake.installPrefix": "/root/build/install"
+
+}

@@ -1,42 +1,44 @@
+# docker run --name muduo-container -v /Share_Root:/share -v /docker-share:/docker-share -p 22222:22 muduo-image:latest
 FROM ubuntu:16.04
 COPY ./docker-cache/apt-source/ali.sources.list /etc/apt/
-RUN cp /etc/apt/sources.list /etc/apt/bak.sources.list
+RUN cp /etc/apt/sources.list /etc/apt/bak.sources.list \
+    && rm /etc/apt/apt.conf.d/docker-clean
 
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libboost-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libprotobuf-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	protobuf-compiler
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libprotoc-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libgoogle-perftools-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libboost-test-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libboost-program-options-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libboost-system-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libc-ares-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libcurl4-openssl-dev
 RUN	cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	zlib1g-dev
 RUN	cat /etc/apt/bak.sources.list > /etc/apt/sources.list && apt-get update \
-    && apt-get install -y \
+    && apt-get clean && apt-get install -y \
 	libgd-dev
 
 # SSH Server
@@ -53,12 +55,12 @@ RUN mkdir /var/run/sshd \
     ; s@^#PasswordAuthentication\>.*$@PasswordAuthentication yes@ \
     ; s@^#AuthorizedKeysFile\>.*$@AuthorizedKeysFile /root/.ssh/authorized_keys@' /etc/ssh/sshd_config
 
-# Install CMake and build-essential(gdb, gcc, make) and git
+# Install CMake, build-essential(g++, gcc, make, ...), gdb, git
 COPY ./docker-cache/cmake-3.15.5-Linux-x86_64.sh /root/docker-cache/
 RUN chmod +x /root/docker-cache/cmake-3.15.5-Linux-x86_64.sh \
-    && /root/project/tmp/cmake-3.15.5-Linux-x86_64.sh --skip-license --prefix=/usr
+    && /root/docker-cache/cmake-3.15.5-Linux-x86_64.sh --skip-license --prefix=/usr
 RUN cat /etc/apt/ali.sources.list > /etc/apt/sources.list && apt-get update \
-	&& apt-get install -y build-essential git
+	&& apt-get install -y build-essential gdb git
 
 # ENV
 RUN printf "\n\
@@ -69,7 +71,6 @@ RUN printf "\n\
 
 # All is OK, do some clean last
 WORKDIR /root/
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 CMD [ "/usr/sbin/sshd", "-D" ]
-# docker run --name muduo-container -v /Share_Root:/share -v /docker-share:/docker-share -p 22222:22 muduo-image:latest

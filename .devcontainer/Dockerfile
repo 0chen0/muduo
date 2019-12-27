@@ -67,6 +67,7 @@ RUN printf "\n\
     export DISPLAY=192.168.31.31:0.0\n\
     alias cls='clear'\n\
     alias sshrestart='/etc/init.d/ssh restart'\n\
+    PS1=\"\\[\\e[7;33m\\]\\w\\[\\e[0m\\]🤕\\$ \"\n\
     " >> /root/.bashrc
 
 # All is OK, do some clean last

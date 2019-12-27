@@ -5,9 +5,9 @@
 
 	"runArgs": [
 			"--name", "muduo-image"
-			, "-p", "22222:22"
-			, "-v", "/Share_Root:/share"
-			, "-v", "docker-share:/docker-share"			
+			, "-p", "20000:22"
+			, "-v", "/Users/dudu/project/share_mac:/root/share"
+			, "--privileged"
 	],
 
 	"extensions": [

@@ -1,0 +1,2 @@
+FROM muduo-image:latest
+CMD ["/bin/bash"]

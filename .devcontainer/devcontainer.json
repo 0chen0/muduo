@@ -1,10 +1,10 @@
 {
-	"name": "muduo-docker-env",
+	"name": "muduo-docker",
 
-	"dockerFile": "Dockerfile",
+	"dockerFile": "Dockerfile_imp",
 
 	"runArgs": [
-			"--name", "muduo-image"
+			"--name", "muduo-container"
 			, "-p", "20000:22"
 			, "-v", "/Users/dudu/project/share_mac:/root/share"
 			, "--privileged"
